@@ -19,7 +19,9 @@ namespace BallarAvStal
     public partial class MainWindow : Window
     {
         public bool goLeft, goRight, goUp, goDown;
+        public bool goLeftLetter, goRightLetter, goUpLetter, goDownLetter;
         int playerSpeed = 10;
+
         
 
         DispatcherTimer gameTimer = new DispatcherTimer();
@@ -33,67 +35,240 @@ namespace BallarAvStal
             gameTimer.Start();
         }
 
+
+
+        //private void playerRectangle_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Left)
+        //    {
+        //        goLeft = false;
+        //    }
+        //}
+        
         private void GameTimerEvent(object sender, EventArgs e)
         {
-            if (goLeft == true && Canvas.GetLeft(player) > 5)
+            //pilar
+
+            if (goLeft == true && Canvas.GetLeft(playerBall) > 5)
             {
-                Canvas.SetLeft(player, Canvas.GetLeft(player) - playerSpeed);
+                Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) - playerSpeed);
             }
-            if (goRight == true && Canvas.GetLeft(player) + (player.Width + 20) < Application.Current.MainWindow.Width)
+            if (goRight == true && Canvas.GetLeft(playerBall) + (playerBall.Width + 20) < Application.Current.MainWindow.Width)
             {
-                Canvas.SetLeft(player, Canvas.GetLeft(player) + playerSpeed);
+                Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) + playerSpeed);
             }
-            if (goUp == true && Canvas.GetTop(player) > 5)
+            if (goUp == true && Canvas.GetTop(playerBall) > 5)
             {
-                Canvas.SetTop(player, Canvas.GetTop(player) - playerSpeed);
+                Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) - playerSpeed);
             }
-            if (goDown == true && Canvas.GetTop(player) + (player.Height + 40) < Application.Current.MainWindow.Height) 
+            if (goDown == true && Canvas.GetTop(playerBall) + (playerBall.Height + 40) < Application.Current.MainWindow.Height)
             {
-                Canvas.SetTop(player, Canvas.GetTop(player) + playerSpeed);
+                Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) + playerSpeed);
             }
+
+
+
+
+
+
+
+
+            //WASD
+
+            if (goLeftLetter == true && Canvas.GetLeft(playerRectangle) > 5)
+            {
+                Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) - playerSpeed);
+            }
+            if (goRightLetter == true && Canvas.GetLeft(playerRectangle) + (playerRectangle.Width + 20) < Application.Current.MainWindow.Width)
+            {
+                Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) + playerSpeed);
+            }
+            if (goUpLetter == true && Canvas.GetTop(playerRectangle) > 5)
+            {
+                Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) - playerSpeed);
+            }
+            if (goDownLetter == true && Canvas.GetTop(playerRectangle) + (playerRectangle.Height + 40) < Application.Current.MainWindow.Height)
+            {
+                Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) + playerSpeed);
+            }
+
         }
+                
+            
+        
 
         private void GameCanvas_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
+
+            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
             {
-                goLeft = true;
+                HandleArrowKey(e);
             }
-            if (e.Key == Key.Right)
+
+            else if (e.Key == Key.A || e.Key == Key.D || e.Key == Key.W || e.Key == Key.S)
             {
-                goRight = true;
+                
+                HandleWASDKey(e);
             }
-            if (e.Key == Key.Up)
-            {
-                goUp = true;
-            }
-            if (e.Key == Key.Down)
-            {
-                goDown = true;
-            }
+
+
+
+
+            //if (e.Key == Key.A || e.Key == Key.Left)
+            //{
+            //    goLeft = true;
+            //    goLeftLetter = true;
+            //}
+            //if (e.Key == Key.D || e.Key == Key.Right)
+            //{
+            //    goRight = true;
+            //    goRightLetter = true;
+            //}
+            //if (e.Key == Key.W || e.Key == Key.Up)
+            //{
+            //    goUp = true;
+            //    goUpLetter = true;
+            //}
+            //if (e.Key == Key.S || e.Key == Key.Down)
+            //{
+            //    goDown = true;
+            //    goDownLetter = true;
+            //}
             
         }
+
+        
+
         private void GameCanvas_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
+            {
+                StopMovingArrowKey(e);
+            }
+
+            else if (e.Key == Key.A || e.Key == Key.D || e.Key == Key.W || e.Key == Key.S)
+            {
+                StopMovingWASDKey(e);
+            }
+            //if (e.Key == Key.A || e.Key == Key.Left)
+            //{
+            //    goLeft = false;
+            //    goLeftLetter = false;
+            //}
+            //if (e.Key == Key.D || e.Key == Key.Right)
+            //{
+            //    goRight = false;
+            //    goRightLetter = false;
+            //}
+            //if (e.Key == Key.W || e.Key == Key.Up)
+            //{
+            //    goUp = false;
+            //    goUpLetter = false;
+            //}
+            //if (e.Key == Key.S || e.Key == Key.Down)
+            //{
+            //    goDown = false;
+            //    goDownLetter = false;
+            //}
+
+        }
+
+        private void StopMovingWASDKey(KeyEventArgs e)
+        {
+            if (e.Key == Key.A)
+            {
+               
+                goLeftLetter = false;
+            }
+            else if (e.Key == Key.D )
+            {
+                
+                goRightLetter = false;
+            }
+            else if (e.Key == Key.W )
+            {
+                
+                goUpLetter = false;
+            }
+            else if (e.Key == Key.S )
+            {
+                
+                goDownLetter = false;
+            }
+        }
+
+        private void StopMovingArrowKey(KeyEventArgs e)
         {
             if (e.Key == Key.Left)
             {
                 goLeft = false;
+                
             }
-            if (e.Key == Key.Right)
+            else if (e.Key == Key.Right)
             {
                 goRight = false;
+                
             }
-            if (e.Key == Key.Up)
+            else if (e.Key == Key.Up)
             {
                 goUp = false;
+               
             }
-            if (e.Key == Key.Down)
+            else if (e.Key == Key.Down)
             {
                 goDown = false;
+                
             }
-
         }
 
-        
+        private void HandleArrowKey(KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                goLeft = true;
+
+            }
+            else if (e.Key == Key.Right)
+            {
+                goRight = true;
+
+            }
+            else if(e.Key == Key.Up)
+            {
+                goUp = true;
+
+            }
+            else if(e.Key == Key.Down)
+            {
+                goDown = true;
+
+            }
+        }
+        private void HandleWASDKey(KeyEventArgs e)
+        {
+            if (e.Key == Key.A)
+            {
+
+                goLeftLetter = true;
+            }
+            else if (e.Key == Key.D)
+            {
+
+                goRightLetter = true;
+            }
+            else if (e.Key == Key.W)
+            {
+
+                goUpLetter = true;
+            }
+            else if (e.Key == Key.S)
+            {
+
+                goDownLetter = true;
+            }
+        }
+
+
+
     }
 }
