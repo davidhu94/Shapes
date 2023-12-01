@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+
 
 namespace BallarAvStal
 {
@@ -16,9 +18,24 @@ namespace BallarAvStal
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool goLeft, goRight, goUp, goDown;
+        int playerSpeed = 8;
+
         public MainWindow()
         {
             InitializeComponent();
+            GameCanvas.Focus();
+
+            
+        }
+
+        private void GameCanvas_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void GameCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
     }
-}

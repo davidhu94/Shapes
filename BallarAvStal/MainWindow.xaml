@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BallarAvStal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800" Focusable="True">
+    <Canvas Name="GameCanvas" KeyUp="GameCanvas_KeyUp" KeyDown="GameCanvas_KeyDown">
+        <Ellipse Name="player" Fill="Black" Width="50" Height="50" Canvas.Left="100" Canvas.Top="100"/>
 
-    </Grid>
+
+
+    </Canvas>
 </Window>
