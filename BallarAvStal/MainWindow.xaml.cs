@@ -18,24 +18,82 @@ namespace BallarAvStal
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool goLeft, goRight, goUp, goDown;
-        int playerSpeed = 8;
+        public bool goLeft, goRight, goUp, goDown;
+        int playerSpeed = 10;
+        
 
+        DispatcherTimer gameTimer = new DispatcherTimer();
         public MainWindow()
         {
             InitializeComponent();
             GameCanvas.Focus();
 
-            
+            gameTimer.Tick += GameTimerEvent;
+            gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            gameTimer.Start();
         }
 
-        private void GameCanvas_KeyUp(object sender, KeyEventArgs e)
+        private void GameTimerEvent(object sender, EventArgs e)
         {
-
+            if (goLeft == true && Canvas.GetLeft(player) > 5)
+            {
+                Canvas.SetLeft(player, Canvas.GetLeft(player) - playerSpeed);
+            }
+            if (goRight == true && Canvas.GetLeft(player) + (player.Width + 20) < Application.Current.MainWindow.Width)
+            {
+                Canvas.SetLeft(player, Canvas.GetLeft(player) + playerSpeed);
+            }
+            if (goUp == true && Canvas.GetTop(player) > 5)
+            {
+                Canvas.SetTop(player, Canvas.GetTop(player) - playerSpeed);
+            }
+            if (goDown == true && Canvas.GetTop(player) + (player.Height + 40) < Application.Current.MainWindow.Height) 
+            {
+                Canvas.SetTop(player, Canvas.GetTop(player) + playerSpeed);
+            }
         }
 
         private void GameCanvas_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Left)
+            {
+                goLeft = true;
+            }
+            if (e.Key == Key.Right)
+            {
+                goRight = true;
+            }
+            if (e.Key == Key.Up)
+            {
+                goUp = true;
+            }
+            if (e.Key == Key.Down)
+            {
+                goDown = true;
+            }
+            
+        }
+        private void GameCanvas_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                goLeft = false;
+            }
+            if (e.Key == Key.Right)
+            {
+                goRight = false;
+            }
+            if (e.Key == Key.Up)
+            {
+                goUp = false;
+            }
+            if (e.Key == Key.Down)
+            {
+                goDown = false;
+            }
 
         }
+
+        
     }
+}
