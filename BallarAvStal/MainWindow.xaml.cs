@@ -37,6 +37,7 @@ namespace BallarAvStal
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(20);
             gameTimer.Start();
+        }
 
             //RANDOM BALLS instans
             randomBall = new RandomBall(GameCanvas);
