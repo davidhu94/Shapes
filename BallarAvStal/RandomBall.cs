@@ -21,9 +21,9 @@ namespace BallarAvStal
 
         public Random random = new Random();
 
-        private int ballsToCreate = 10;
+        private int ballsToCreate = 100; //Antal bollar att skapa
 
-        private int totalBalls = 0;
+        private int totalBalls = 0; //Räknar varje skapad boll och stoppar skapa när den når ballstoVreate
 
         private DispatcherTimer ballCreationTimer = new DispatcherTimer();
 
