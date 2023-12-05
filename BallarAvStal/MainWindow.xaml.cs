@@ -9,6 +9,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Collections.Generic;
+
 
 
 namespace BallarAvStal
@@ -22,9 +24,11 @@ namespace BallarAvStal
         public bool goLeftLetter, goRightLetter, goUpLetter, goDownLetter;
         int playerSpeed = 10;
 
-        
-
         DispatcherTimer gameTimer = new DispatcherTimer();
+
+         
+        private RandomBall randomBall;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -33,9 +37,11 @@ namespace BallarAvStal
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(20);
             gameTimer.Start();
+
+            //RANDOM BALLS instans
+            randomBall = new RandomBall(GameCanvas);
+
         }
-
-
 
         //private void playerRectangle_KeyUp(object sender, KeyEventArgs e)
         //{
@@ -66,13 +72,6 @@ namespace BallarAvStal
                 Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) + playerSpeed);
             }
 
-
-
-
-
-
-
-
             //WASD
 
             if (goLeftLetter == true && Canvas.GetLeft(playerRectangle) > 5)
@@ -92,10 +91,21 @@ namespace BallarAvStal
                 Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) + playerSpeed);
             }
 
-        }
-                
             
-        
+            //RANDOM BALLS
+            randomBall.CreateRandomBall();
+            randomBall.MoveRandomBall();
+
+            //Krock med bollar avslutar spelet
+            if (randomBall.CheckForCollision(new Rect (Canvas.GetLeft(playerRectangle), Canvas.GetTop(playerRectangle), playerRectangle.Width, playerRectangle.Height)))
+            {
+                randomBall.GameOver();
+                gameTimer.Stop();
+            }
+        }
+
+
+
 
         private void GameCanvas_KeyDown(object sender, KeyEventArgs e)
         {
@@ -266,9 +276,6 @@ namespace BallarAvStal
 
                 goDownLetter = true;
             }
-        }
-
-
-
+        } 
     }
 }
