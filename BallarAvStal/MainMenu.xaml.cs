@@ -23,5 +23,10 @@ namespace BallarAvStal
         {
             InitializeComponent();
         }
+
+        private void NewGameButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

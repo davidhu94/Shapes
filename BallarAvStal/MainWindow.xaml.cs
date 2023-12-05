@@ -26,7 +26,9 @@ namespace BallarAvStal
 
         DispatcherTimer gameTimer = new DispatcherTimer();
 
-         
+        DispatcherTimer timerTick = new DispatcherTimer();
+
+
         private RandomBall randomBall;
         
         public MainWindow()
@@ -42,9 +44,24 @@ namespace BallarAvStal
             randomBall = new RandomBall(GameCanvas);
         }
 
-            
+        private int increment = 0;
 
-    
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            DispatcherTimer gameTimer = new DispatcherTimer();
+            gameTimer.Interval = TimeSpan.FromSeconds(1);
+            gameTimer.Tick += dtTick;
+            gameTimer.Start();
+        }
+
+        private void dtTick(object sender, EventArgs e)
+        {
+            increment++;
+            timeLbl.Content = increment.ToString();
+        }
+
+
+
 
         //private void playerRectangle_KeyUp(object sender, KeyEventArgs e)
         //{
@@ -53,7 +70,7 @@ namespace BallarAvStal
         //        goLeft = false;
         //    }
         //}
-        
+
         private void GameTimerEvent(object sender, EventArgs e)
         {
             //pilar

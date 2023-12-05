@@ -22,8 +22,25 @@ namespace BallarAvStal
         public NewGame()
         {
             InitializeComponent();
-        }
 
-       
+            
+        }
+        MainWindow mainWindow;
+        Player player = new Player();
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectShape.SelectedItem != null && NameTextBox.Text != null) 
+            {
+                player.CreatePlayer();
+                
+                mainWindow.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Select a shape to begin.");
+            }
+        }
     }
 }

@@ -13,12 +13,22 @@
                 <TextBox Name="NameTextBox" Width="150"/>
             </StackPanel>
 
-            <StackPanel Margin="0,0,0,10">
+            <StackPanel Margin="0,0,0,10" HorizontalAlignment="Left">
                 <TextBlock Text="Shape:" VerticalAlignment="Center"/>
-                
+                <ComboBox x:Name="SelectShape" Width="150">
+                    <ComboBoxItem Name="playerEllipse" Content="Ball"/>
+                    <ComboBoxItem Name="playerRectangle" Content="Square"/>
+                    <ComboBoxItem Name="playerPolygon" Content="Triangle"/>
+                </ComboBox>
+                <!--<WrapPanel>
+                    <Ellipse Name="playerEllipse" Fill="Black" Width="20" Height="20" MouseDown="playerEllipse_MouseDown"/>
+                    <Rectangle Name="playerRectangle" Fill="BlueViolet"  Width="20" Height="20" MouseDown="playerRectangle_MouseDown"/>
+                    <Polygon Name="playerPolygon" Points="10,110 60,10 110,110" Fill="blue" Height="40" Width="92" MouseDown="playerPolygon_MouseDown" />
+                </WrapPanel>-->
+
             </StackPanel>
 
-            <!--<Button Content="Play" Width="100" Height="30" Click="PlayButton_Click"/>-->
+            <Button Name="playButton" Content="Play" Width="100" Height="30" Click="PlayButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

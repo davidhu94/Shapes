@@ -9,10 +9,11 @@
 
     <Grid>
         <StackPanel VerticalAlignment="center" HorizontalAlignment="Center">
-            <Button Content="New Game" Height="30" Width="150"/>
-            <Button Content="Continue Game" Height="30" Width="150" Margin="0 20 0 0"/>
-            <Button Content="High Score" Height="30" Width="150" Margin="0 20 0 0"/>
+            <Button Content="New Game" Height="30" Width="150" Click="NewGameButton_Click"/>
+            <Button Content="Store" Height="30" Width="150" Margin="0 20 0 0"/>
+
         </StackPanel>
+        <ListBox x:Name="HighScoreBoard" Margin="35,45,585,164"/>
 
     </Grid>
 </Window>
