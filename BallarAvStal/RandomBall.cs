@@ -25,7 +25,7 @@ namespace BallarAvStal
 
         private int totalBalls = 0; //Räknar varje skapad boll och stoppar skapa när den når ballstoVreate
 
-        private DispatcherTimer ballCreationTimer = new DispatcherTimer();
+        public DispatcherTimer ballCreationTimer = new DispatcherTimer();
 
         public RandomBall(Canvas canvas)
         {
@@ -159,6 +159,8 @@ namespace BallarAvStal
             MessageBoxResult result = MessageBox.Show("Game Over! Play again?", "Game Over", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
+
+
                 //Metod för att starta om spelet
             }
             else
