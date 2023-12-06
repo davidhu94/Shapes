@@ -30,11 +30,33 @@ namespace BallarAvStal
 
 
         private RandomBall randomBall;
+
+        private Player player;
         
-        public MainWindow()
+        //public MainWindow()
+        //{
+        //    InitializeComponent();
+        //    GameCanvas.Focus();
+
+        //    gameTimer.Tick += GameTimerEvent;
+        //    gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+        //    gameTimer.Start();
+
+        //    //RANDOM BALLS instans
+        //    randomBall = new RandomBall(GameCanvas);
+        //}
+
+        //Konstruktor för att hämta player, gick ej att lägga parametrarna i den andra konstruktorn
+        public MainWindow(Player player)
         {
             InitializeComponent();
             GameCanvas.Focus();
+
+            this.player = player;
+
+            Shape playerShape = player.GetPlayerShape();
+            GameCanvas.Children.Add(playerShape);
+            //Ställ in starpositioner:
 
             gameTimer.Tick += GameTimerEvent;
             gameTimer.Interval = TimeSpan.FromMilliseconds(20);
@@ -123,9 +145,6 @@ namespace BallarAvStal
                 gameTimer.Stop();
             }
         }
-
-
-
 
         private void GameCanvas_KeyDown(object sender, KeyEventArgs e)
         {
@@ -297,5 +316,6 @@ namespace BallarAvStal
                 goDownLetter = true;
             }
         } 
+
     }
 }

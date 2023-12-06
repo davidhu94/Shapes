@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -13,43 +14,20 @@ namespace BallarAvStal
     {
         public string PlayerName { get; set; }
 
-        NewGame newGame;
-
-        private Canvas gameCanvas;
-
-        MainWindow mainWindow;
-
-        public void CreatePlayer()
+        public string SelectedShape { get; set; }
+        
+        public Shape GetPlayerShape()
         {
-            if (newGame.SelectShape.SelectedItem == newGame.playerRectangle)
+            switch (SelectedShape)
             {
-                var rectangle = new Rectangle
-                {
-                    Width = 40,
-                    Height = 40,
-                    Fill = Brushes.Blue
-                };
-            }
-            else if (newGame.SelectShape.SelectedItem == newGame.playerEllipse)
-            {
-                var ellipse = new Ellipse
-                {
-                    Width = 40,
-                    Height = 40,
-                    Fill = Brushes.Blue
-                };
-            }
-            else if (newGame.SelectShape.SelectedItem == newGame.playerPolygon)
-            {
-                var polygon = new Polygon
-                {
-                    Width = 40,
-                    Height = 40,
-                    Fill = Brushes.Blue
-                };
-
-                gameCanvas.Children.Add(polygon);
-                mainWindow.Show();
+                case "Ellipse":
+                    return new Ellipse { Width = 40, Height = 40, Fill = Brushes.Blue };
+                case "Rectangle":
+                    return new Rectangle { Width = 40, Height = 40, Fill = Brushes.Blue };
+                case "Polygon":
+                    return new Polygon { Width = 40, Height = 40, Fill = Brushes.Blue };
+                default:
+                    throw new InvalidOperationException("Invalid shape selected");
             }
         }
     }
