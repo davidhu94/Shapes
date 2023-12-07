@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -31,7 +24,7 @@ namespace BallarAvStal
         {
             this.gameCanvas = canvas;
             ballCreationTimer.Tick += BallCreationTimerEvent;
-            ballCreationTimer.Interval = TimeSpan.FromSeconds(10);
+            ballCreationTimer.Interval = TimeSpan.FromSeconds(5);
             ballCreationTimer.Start();
         }
 
@@ -140,9 +133,11 @@ namespace BallarAvStal
         }
 
         //Kollision med Spelare och bollarna
-        public bool CheckForCollision(Rect playerRect)
+        public bool CheckForCollision(Shape playerShape)
         {
-            foreach (var ball in movingBalls)
+            Rect playerRect = new Rect(Canvas.GetLeft(playerShape), Canvas.GetTop(playerShape), playerShape.Width, playerShape.Height);
+
+            foreach (Ellipse ball in movingBalls)
             {
                 Rect ballRect = new Rect(Canvas.GetLeft(ball), Canvas.GetTop(ball), ball.Width, ball.Height);
                 if (playerRect.IntersectsWith(ballRect))
@@ -150,23 +145,16 @@ namespace BallarAvStal
                     return true;
                 }
             }
+
             return false;
         }
 
-        public void GameOver()
+        public void ResetBalls()
         {
-            ballCreationTimer.Stop();
-            MessageBoxResult result = MessageBox.Show("Game Over! Play again?", "Game Over", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
-            {
-
-
-                //Metod för att starta om spelet
-            }
-            else
-            {
-                //Återgå till Main window när vi skapat det?
-            }
-        }
+            movingBalls.Clear();
+            gameCanvas.Children.Clear();
+            totalBalls = 0;
+            ballsToCreate = 1;
+        }       
     }
 }

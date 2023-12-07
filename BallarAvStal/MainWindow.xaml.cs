@@ -1,15 +1,9 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Collections.Generic;
+
 
 
 
@@ -20,33 +14,22 @@ namespace BallarAvStal
     /// </summary>
     public partial class MainWindow : Window
     {
-        public bool goLeft, goRight, goUp, goDown;
-        public bool goLeftLetter, goRightLetter, goUpLetter, goDownLetter;
-        int playerSpeed = 10;
+        private DispatcherTimer gameLoopTimer;
 
-        DispatcherTimer gameTimer = new DispatcherTimer();
-
-        DispatcherTimer timerTick = new DispatcherTimer();
-
+        private PlayerControl playerControl;
 
         private RandomBall randomBall;
 
         private Player player;
-        
-        //public MainWindow()
-        //{
-        //    InitializeComponent();
-        //    GameCanvas.Focus();
 
-        //    gameTimer.Tick += GameTimerEvent;
-        //    gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-        //    gameTimer.Start();
+        private Timer timer;
 
-        //    //RANDOM BALLS instans
-        //    randomBall = new RandomBall(GameCanvas);
-        //}
+        private int gameLoopTicks = 0;
 
-        //Konstruktor för att hämta player, gick ej att lägga parametrarna i den andra konstruktorn
+        private int secondsPassed = 0;
+
+
+
         public MainWindow(Player player)
         {
             InitializeComponent();
@@ -56,266 +39,117 @@ namespace BallarAvStal
 
             Shape playerShape = player.GetPlayerShape();
             GameCanvas.Children.Add(playerShape);
-            //Ställ in starpositioner:
+            Canvas.SetLeft(playerShape, 56);
+            Canvas.SetTop(playerShape, 200);
 
-            gameTimer.Tick += GameTimerEvent;
-            gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-            gameTimer.Start();
+            playerControl = new PlayerControl(GameCanvas, playerShape);
+            this.KeyDown += OnKeyDown;
+            this.KeyUp += OnKeyUp;
 
-            //RANDOM BALLS instans
+            gameLoopTimer = new DispatcherTimer();
+            gameLoopTimer.Tick += GameLoopTimer_Tick;
+            gameLoopTimer.Interval = TimeSpan.FromMilliseconds(20); 
+            gameLoopTimer.Start();
+
             randomBall = new RandomBall(GameCanvas);
+
         }
 
-        private int increment = 0;
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void GameLoopTimer_Tick(object sender, EventArgs e)
         {
-            DispatcherTimer gameTimer = new DispatcherTimer();
-            gameTimer.Interval = TimeSpan.FromSeconds(1);
-            gameTimer.Tick += dtTick;
-            gameTimer.Start();
-        }
+            playerControl.MovePlayer();
 
-        private void dtTick(object sender, EventArgs e)
-        {
-            increment++;
-            timeLbl.Content = increment.ToString();
-        }
-
-
-
-
-        //private void playerRectangle_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Left)
-        //    {
-        //        goLeft = false;
-        //    }
-        //}
-
-        private void GameTimerEvent(object sender, EventArgs e)
-        {
-            //pilar
-
-            if (goLeft == true && Canvas.GetLeft(playerBall) > 5)
+            //Klockan som räknar och generera bollar
+            gameLoopTicks++;
+            if (gameLoopTicks >= 50) // 50 ticks * 20 ms = 1000 ms (1 sekund)
             {
-                Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) - playerSpeed);
-            }
-            if (goRight == true && Canvas.GetLeft(playerBall) + (playerBall.Width + 20) < Application.Current.MainWindow.Width)
-            {
-                Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) + playerSpeed);
-            }
-            if (goUp == true && Canvas.GetTop(playerBall) > 5)
-            {
-                Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) - playerSpeed);
-            }
-            if (goDown == true && Canvas.GetTop(playerBall) + (playerBall.Height + 40) < Application.Current.MainWindow.Height)
-            {
-                Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) + playerSpeed);
+                UpdateTime();
+                gameLoopTicks = 0;
             }
 
-            //WASD
-
-            if (goLeftLetter == true && Canvas.GetLeft(playerRectangle) > 5)
-            {
-                Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) - playerSpeed);
-            }
-            if (goRightLetter == true && Canvas.GetLeft(playerRectangle) + (playerRectangle.Width + 20) < Application.Current.MainWindow.Width)
-            {
-                Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) + playerSpeed);
-            }
-            if (goUpLetter == true && Canvas.GetTop(playerRectangle) > 5)
-            {
-                Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) - playerSpeed);
-            }
-            if (goDownLetter == true && Canvas.GetTop(playerRectangle) + (playerRectangle.Height + 40) < Application.Current.MainWindow.Height)
-            {
-                Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) + playerSpeed);
-            }
-
-            
-            //RANDOM BALLS
             randomBall.CreateRandomBall();
+
             randomBall.MoveRandomBall();
-
-            //Krock med bollar avslutar spelet
-            if (randomBall.CheckForCollision(new Rect (Canvas.GetLeft(playerRectangle), Canvas.GetTop(playerRectangle), playerRectangle.Width, playerRectangle.Height)))
+            //kollision
+            if (randomBall.CheckForCollision(playerControl.PlayerShape))
             {
-                randomBall.GameOver();
-                gameTimer.Stop();
-            }
-        }
-
-        private void GameCanvas_KeyDown(object sender, KeyEventArgs e)
-        {
-
-            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
-            {
-                HandleArrowKey(e);
+                GameOver();
             }
 
-            else if (e.Key == Key.A || e.Key == Key.D || e.Key == Key.W || e.Key == Key.S)
-            {
-                
-                HandleWASDKey(e);
-            }
-
-
-
-
-            //if (e.Key == Key.A || e.Key == Key.Left)
-            //{
-            //    goLeft = true;
-            //    goLeftLetter = true;
-            //}
-            //if (e.Key == Key.D || e.Key == Key.Right)
-            //{
-            //    goRight = true;
-            //    goRightLetter = true;
-            //}
-            //if (e.Key == Key.W || e.Key == Key.Up)
-            //{
-            //    goUp = true;
-            //    goUpLetter = true;
-            //}
-            //if (e.Key == Key.S || e.Key == Key.Down)
-            //{
-            //    goDown = true;
-            //    goDownLetter = true;
-            //}
             
         }
 
-        
-
-        private void GameCanvas_KeyUp(object sender, KeyEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
+            switch (e.Key)
             {
-                StopMovingArrowKey(e);
-            }
-
-            else if (e.Key == Key.A || e.Key == Key.D || e.Key == Key.W || e.Key == Key.S)
-            {
-                StopMovingWASDKey(e);
-            }
-            //if (e.Key == Key.A || e.Key == Key.Left)
-            //{
-            //    goLeft = false;
-            //    goLeftLetter = false;
-            //}
-            //if (e.Key == Key.D || e.Key == Key.Right)
-            //{
-            //    goRight = false;
-            //    goRightLetter = false;
-            //}
-            //if (e.Key == Key.W || e.Key == Key.Up)
-            //{
-            //    goUp = false;
-            //    goUpLetter = false;
-            //}
-            //if (e.Key == Key.S || e.Key == Key.Down)
-            //{
-            //    goDown = false;
-            //    goDownLetter = false;
-            //}
-
-        }
-
-        private void StopMovingWASDKey(KeyEventArgs e)
-        {
-            if (e.Key == Key.A)
-            {
-               
-                goLeftLetter = false;
-            }
-            else if (e.Key == Key.D )
-            {
-                
-                goRightLetter = false;
-            }
-            else if (e.Key == Key.W )
-            {
-                
-                goUpLetter = false;
-            }
-            else if (e.Key == Key.S )
-            {
-                
-                goDownLetter = false;
+                case Key.Left:
+                    playerControl.GoLeft = true; 
+                    break;
+                case Key.Right: 
+                    playerControl.GoRight = true; 
+                    break;
+                case Key.Up: 
+                    playerControl.GoUp = true; 
+                    break;
+                case Key.Down: 
+                    playerControl.GoDown = true; 
+                    break;
             }
         }
 
-        private void StopMovingArrowKey(KeyEventArgs e)
+        private void OnKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
+            switch (e.Key)
             {
-                goLeft = false;
-                
-            }
-            else if (e.Key == Key.Right)
-            {
-                goRight = false;
-                
-            }
-            else if (e.Key == Key.Up)
-            {
-                goUp = false;
-               
-            }
-            else if (e.Key == Key.Down)
-            {
-                goDown = false;
-                
+                case Key.Left:
+                    playerControl.GoLeft = false; 
+                    break;
+                case Key.Right: 
+                    playerControl.GoRight = false; 
+                    break;
+                case Key.Up: 
+                    playerControl.GoUp = false; 
+                    break;
+                case Key.Down: 
+                    playerControl.GoDown = false; 
+                    break;
             }
         }
 
-        private void HandleArrowKey(KeyEventArgs e)
+        private void UpdateTime()
         {
-            if (e.Key == Key.Left)
-            {
-                goLeft = true;
+            secondsPassed++;
+            timeLbl.Content = secondsPassed.ToString(); 
+        }
 
+        public void GameOver()
+        {
+            randomBall.ballCreationTimer.Stop();
+
+            gameLoopTimer.Stop();
+
+            MessageBoxResult result = MessageBox.Show("Game Over! Play again?", "Game Over", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                RestartGame();
             }
-            else if (e.Key == Key.Right)
+            else
             {
-                goRight = true;
-
-            }
-            else if(e.Key == Key.Up)
-            {
-                goUp = true;
-
-            }
-            else if(e.Key == Key.Down)
-            {
-                goDown = true;
-
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
             }
         }
-        private void HandleWASDKey(KeyEventArgs e)
+
+        public void RestartGame()
         {
-            if (e.Key == Key.A)
-            {
+            Canvas.SetLeft(playerControl.PlayerShape, 56); 
+            Canvas.SetTop(playerControl.PlayerShape, 200);
 
-                goLeftLetter = true;
-            }
-            else if (e.Key == Key.D)
-            {
+            randomBall.ResetBalls();
 
-                goRightLetter = true;
-            }
-            else if (e.Key == Key.W)
-            {
-
-                goUpLetter = true;
-            }
-            else if (e.Key == Key.S)
-            {
-
-                goDownLetter = true;
-            }
-        } 
-
+            gameLoopTimer.Start();
+            randomBall.ballCreationTimer.Start(); 
+        }
     }
 }
