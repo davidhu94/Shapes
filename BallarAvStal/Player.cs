@@ -16,6 +16,10 @@ namespace BallarAvStal
 
         public string SelectedShape { get; set; }
         
+        public int HighScore { get; set; }
+
+        
+
         public Shape GetPlayerShape()
         {
             switch (SelectedShape)

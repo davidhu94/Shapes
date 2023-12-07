@@ -32,7 +32,9 @@ namespace BallarAvStal
         private RandomBall randomBall;
 
         private Player player;
-        
+
+        //public int HighScore => increment;
+
         //public MainWindow()
         //{
         //    InitializeComponent();
@@ -54,6 +56,8 @@ namespace BallarAvStal
 
             this.player = player;
 
+            player.HighScore = 0;
+
             Shape playerShape = player.GetPlayerShape();
             GameCanvas.Children.Add(playerShape);
             //Ställ in starpositioner:
@@ -65,6 +69,7 @@ namespace BallarAvStal
             //RANDOM BALLS instans
             randomBall = new RandomBall(GameCanvas);
         }
+        
 
         private int increment = 0;
 
@@ -76,13 +81,18 @@ namespace BallarAvStal
             gameTimer.Start();
         }
 
-        private void dtTick(object sender, EventArgs e)
+        public void dtTick(object sender, EventArgs e)
         {
             increment++;
             timeLbl.Content = increment.ToString();
+
+
+            player.HighScore++;
+
+
         }
 
-
+        
 
 
         //private void playerRectangle_KeyUp(object sender, KeyEventArgs e)
@@ -97,43 +107,85 @@ namespace BallarAvStal
         {
             //pilar
 
-            if (goLeft == true && Canvas.GetLeft(playerBall) > 5)
-            {
-                Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) - playerSpeed);
-            }
-            if (goRight == true && Canvas.GetLeft(playerBall) + (playerBall.Width + 20) < Application.Current.MainWindow.Width)
-            {
-                Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) + playerSpeed);
-            }
-            if (goUp == true && Canvas.GetTop(playerBall) > 5)
-            {
-                Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) - playerSpeed);
-            }
-            if (goDown == true && Canvas.GetTop(playerBall) + (playerBall.Height + 40) < Application.Current.MainWindow.Height)
-            {
-                Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) + playerSpeed);
-            }
+            //if (goLeft == true && Canvas.GetLeft(playerBall) > 5)
+            //{
+            //    Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) - playerSpeed);
+            //}
+            //if (goRight == true && Canvas.GetLeft(playerBall) + (playerBall.Width + 20) < Application.Current.MainWindow.Width)
+            //{
+            //    Canvas.SetLeft(playerBall, Canvas.GetLeft(playerBall) + playerSpeed);
+            //}
+            //if (goUp == true && Canvas.GetTop(playerBall) > 5)
+            //{
+            //    Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) - playerSpeed);
+            //}
+            //if (goDown == true && Canvas.GetTop(playerBall) + (playerBall.Height + 40) < Application.Current.MainWindow.Height)
+            //{
+            //    Canvas.SetTop(playerBall, Canvas.GetTop(playerBall) + playerSpeed);
+            //}
 
-            //WASD
+            ////WASD
 
-            if (goLeftLetter == true && Canvas.GetLeft(playerRectangle) > 5)
+            //if (goLeftLetter == true && Canvas.GetLeft(playerRectangle) > 5)
+            //{
+            //    Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) - playerSpeed);
+            //}
+            //if (goRightLetter == true && Canvas.GetLeft(playerRectangle) + (playerRectangle.Width + 20) < Application.Current.MainWindow.Width)
+            //{
+            //    Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) + playerSpeed);
+            //}
+            //if (goUpLetter == true && Canvas.GetTop(playerRectangle) > 5)
+            //{
+            //    Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) - playerSpeed);
+            //}
+            //if (goDownLetter == true && Canvas.GetTop(playerRectangle) + (playerRectangle.Height + 40) < Application.Current.MainWindow.Height)
+            //{
+            //    Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) + playerSpeed);
+            //}
+
+
+            //Gå utanför skärmen och komma till andra sidan.
+            
+            if (goLeftLetter == true)
             {
                 Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) - playerSpeed);
             }
-            if (goRightLetter == true && Canvas.GetLeft(playerRectangle) + (playerRectangle.Width + 20) < Application.Current.MainWindow.Width)
+            if (goRightLetter == true)
             {
                 Canvas.SetLeft(playerRectangle, Canvas.GetLeft(playerRectangle) + playerSpeed);
             }
-            if (goUpLetter == true && Canvas.GetTop(playerRectangle) > 5)
+            if (goUpLetter == true)
             {
                 Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) - playerSpeed);
             }
-            if (goDownLetter == true && Canvas.GetTop(playerRectangle) + (playerRectangle.Height + 40) < Application.Current.MainWindow.Height)
+            if (goDownLetter == true)
             {
                 Canvas.SetTop(playerRectangle, Canvas.GetTop(playerRectangle) + playerSpeed);
             }
 
             
+            if (Canvas.GetLeft(playerRectangle) > Application.Current.MainWindow.Width)
+            {
+                Canvas.SetLeft(playerRectangle, -playerRectangle.ActualWidth);
+            }
+            else if (Canvas.GetLeft(playerRectangle) + playerRectangle.ActualWidth < 0)
+            {
+                Canvas.SetLeft(playerRectangle, Application.Current.MainWindow.Width);
+            }
+
+            if (Canvas.GetTop(playerRectangle) > Application.Current.MainWindow.Height)
+            {
+                Canvas.SetTop(playerRectangle, -playerRectangle.ActualHeight);
+            }
+            else if (Canvas.GetTop(playerRectangle) + playerRectangle.ActualHeight < 0)
+            {
+                Canvas.SetTop(playerRectangle, Application.Current.MainWindow.Height);
+            }
+
+
+
+
+
             //RANDOM BALLS
             randomBall.CreateRandomBall();
             randomBall.MoveRandomBall();
@@ -143,6 +195,14 @@ namespace BallarAvStal
             {
                 randomBall.GameOver();
                 gameTimer.Stop();
+            }
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
             }
         }
 

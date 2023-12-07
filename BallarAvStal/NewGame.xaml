@@ -5,24 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BallarAvStal"
         mc:Ignorable="d"
-        Title="NewGame" Height="450" Width="800">
-    <Grid>
-        <StackPanel Margin="10">
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="Name:" VerticalAlignment="Center"/>
-                <TextBox Name="NameTextBox" Width="150"/>
+        Title="NewGame" Height="450" Width="800"
+        
+        
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        MouseDown="Window_MouseDown">
+
+    <Border CornerRadius="50"
+        Background="#96ceb4"
+        BorderBrush="#ffeead"
+        BorderThickness="5">
+        
+    
+        <Grid>
+            
+            <StackPanel Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="10,0,0,10">
+                    <TextBlock Text="Name:" Margin="10 0 0 0" VerticalAlignment="Center" Background="#88d8b0"/>
+                    <TextBox Name="NameTextBox" Margin="20 15 10 10" Width="150" Background="#ffeead"/>
             </StackPanel>
 
-            <StackPanel Margin="0,0,0,10" HorizontalAlignment="Left">
-                <TextBlock Text="Shape:" VerticalAlignment="Center"/>
-                <ComboBox x:Name="SelectShape" Width="150">
-                    <ComboBoxItem  Content="Ellipse"/>
-                    <ComboBoxItem  Content="Rectangle"/>
-                    <ComboBoxItem  Content="Polygon"/>
+            <StackPanel Margin="30,10,0,10" HorizontalAlignment="Left">
+                    <TextBlock Margin="10" Text="Shape:" VerticalAlignment="Center" Background="#ffeead"/>
+                
+                    <ComboBox Margin="5" Background="#ffeead" x:Name="SelectShape" Width="150">
+                        
+                        <ComboBoxItem Content="Ellipse" Background="#ffeead"/>
+                        <ComboBoxItem Content="Rectangle" Background="#ffeead"/>
+                        <ComboBoxItem Content="Polygon" Background="#ffeead"/>
                 </ComboBox>
             </StackPanel>
 
-            <Button Name="playButton" Content="Play" Width="100" Height="30" Click="PlayButton_Click"/>
+                <Button Name="playButton" Content="Play" Background="#ffeead" Width="100" Height="30" Click="PlayButton_Click"/>
         </StackPanel>
-    </Grid>
+        </Grid>
+    </Border>
+    
 </Window>

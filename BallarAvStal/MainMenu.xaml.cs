@@ -19,6 +19,7 @@ namespace BallarAvStal
     /// </summary>
     public partial class MainMenu : Window
     {
+        MainWindow mainWindow;
         public MainMenu()
         {
             InitializeComponent();
@@ -26,7 +27,17 @@ namespace BallarAvStal
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
         {
+            NewGame newGame = new NewGame();
+            newGame.Show();
+            this.Hide();
+        }
 
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }

@@ -5,15 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BallarAvStal"
         mc:Ignorable="d"
-        Title="MainMenu" Height="450" Width="800">
+        Title="MainMenu" Height="450" Width="800"
+        
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        MouseDown="Window_MouseDown">
+    
+    <Border CornerRadius="50"
+            Background="#96ceb4"
+            BorderBrush="#ffeead"
+            BorderThickness="5">
 
-    <Grid>
+        <!--Röd #ff6f69
+        Beige #ffeead
+        Grön #96ceb4
+        Mörkare Beige #ffcc5c
+        Ljusare grön #88d8b0-->
+        <Grid>
         <StackPanel VerticalAlignment="center" HorizontalAlignment="Center">
-            <Button Content="New Game" Height="30" Width="150" Click="NewGameButton_Click"/>
-            <Button Content="Store" Height="30" Width="150" Margin="0 20 0 0"/>
+                <Button x:Name="newGameButton" Background="#ffeead"  Content="New Game" Height="30" Width="150" Click="NewGameButton_Click"/>
+                <Button Background="#ffeead" Content="Store" Height="30" Width="150" Margin="0 20 0 0"/>
 
         </StackPanel>
-        <ListBox x:Name="HighScoreBoard" Margin="35,45,585,164"/>
+            <ListBox x:Name="HighScoreBoard" Background="#ffeead" Margin="35,45,585,164"/>
 
     </Grid>
+    </Border>
 </Window>

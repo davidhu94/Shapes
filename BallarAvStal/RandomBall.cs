@@ -160,11 +160,12 @@ namespace BallarAvStal
             if (result == MessageBoxResult.Yes)
             {
 
-
+                
                 //Metod för att starta om spelet
             }
             else
             {
+                
                 //Återgå till Main window när vi skapat det?
             }
         }
