@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "rNvc3WYfCWA5zQLfbqISEZPfQ/dgMDQpDG1qmNYn9BmJN+GklhvvM+p4UT/8ZHu8QDidDV1pNuzHiNM9fD466w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\vilhe\\source\\repos\\BallarAvStalTest\\BallarAvStalTest.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vilhe\\.nuget\\packages\\documentformat.openxml\\3.0.0\\documentformat.openxml.3.0.0.nupkg.sha512",
+    "C:\\Users\\vilhe\\.nuget\\packages\\documentformat.openxml.framework\\3.0.0\\documentformat.openxml.framework.3.0.0.nupkg.sha512",
+    "C:\\Users\\vilhe\\.nuget\\packages\\system.io.packaging\\8.0.0\\system.io.packaging.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
