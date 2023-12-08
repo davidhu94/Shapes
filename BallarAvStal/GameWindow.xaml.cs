@@ -19,8 +19,6 @@ namespace BallarAvStal
 
         private Player player;
 
-        private Timer timer;
-
         private int gameLoopTicks = 0;
 
         private int secondsPassed = 0;
@@ -50,28 +48,25 @@ namespace BallarAvStal
 
         }
 
+        //Main loop of the game
+        //Clock ticks 50 ticks * 20 ms = 1000 ms (1 second)
         private void GameLoopTimer_Tick(object sender, EventArgs e)
         {
             playerControl.MovePlayer();
 
-            //Klockan som räknar och generera bollar
             gameLoopTicks++;
-            if (gameLoopTicks >= 50) // 50 ticks * 20 ms = 1000 ms (1 sekund)
+            if (gameLoopTicks >= 50) 
             {
                 UpdateTime();
                 gameLoopTicks = 0;
             }
 
-            randomBall.CreateRandomBall();
-
             randomBall.MoveRandomBall();
-            //kollision
+
             if (randomBall.CheckForCollision(playerControl.PlayerShape))
             {
                 GameOver();
-            }
-
-            
+            } 
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -82,20 +77,21 @@ namespace BallarAvStal
             }
         }
 
+        //Update player movement based on pressed keys
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
-                case Key.Left:
+                case Key.A:
                     playerControl.GoLeft = true; 
                     break;
-                case Key.Right: 
+                case Key.D: 
                     playerControl.GoRight = true; 
                     break;
-                case Key.Up: 
+                case Key.W: 
                     playerControl.GoUp = true; 
                     break;
-                case Key.Down: 
+                case Key.S: 
                     playerControl.GoDown = true; 
                     break;
             }
@@ -105,21 +101,22 @@ namespace BallarAvStal
         {
             switch (e.Key)
             {
-                case Key.Left:
+                case Key.A:
                     playerControl.GoLeft = false; 
                     break;
-                case Key.Right: 
+                case Key.D: 
                     playerControl.GoRight = false; 
                     break;
-                case Key.Up: 
+                case Key.W: 
                     playerControl.GoUp = false; 
                     break;
-                case Key.Down: 
+                case Key.S: 
                     playerControl.GoDown = false; 
                     break;
             }
         }
 
+        //Uppdate the clock by adding 1 second
         private void UpdateTime()
         {
             secondsPassed++;
@@ -146,13 +143,16 @@ namespace BallarAvStal
 
         public void RestartGame()
         {
-            Canvas.SetLeft(playerControl.PlayerShape, 56); 
+            playerControl.PlayerShape.Visibility = Visibility.Visible;
+            Canvas.SetLeft(playerControl.PlayerShape, 56);
             Canvas.SetTop(playerControl.PlayerShape, 200);
 
-            randomBall.ResetBalls();
+            secondsPassed = 0;
+            UpdateTime();
 
             gameLoopTimer.Start();
-            randomBall.ballCreationTimer.Start(); 
+            randomBall.ResetBalls();
+            randomBall.ballCreationTimer.Start();
         }
     }
 }

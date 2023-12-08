@@ -14,41 +14,31 @@ namespace BallarAvStal
 
         public Random random = new Random();
 
-        private int ballsToCreate = 10; //Antal bollar att skapa
-
-        private int totalBalls = 0; //Räknar varje skapad boll och stoppar skapa när den når ballstoVreate
-
         public DispatcherTimer ballCreationTimer = new DispatcherTimer();
 
+        //Control generated balls/second here (TimeSpan)
         public RandomBall(Canvas canvas)
         {
             this.gameCanvas = canvas;
             ballCreationTimer.Tick += BallCreationTimerEvent;
-            ballCreationTimer.Interval = TimeSpan.FromSeconds(5);
+            ballCreationTimer.Interval = TimeSpan.FromSeconds(2);  
             ballCreationTimer.Start();
         }
 
+        //Control amount of generated balls here
         private void BallCreationTimerEvent(object sender, EventArgs e)
         {
-            if (ballsToCreate > 0)
+            for (int i = 0; i < 3; i++) 
             {
                 CreateRandomBall();
-                ballsToCreate--;
-            }
-            else
-            {
-                ballCreationTimer.Stop();
             }
         }
 
-        //Skapa bollarna och kasta ut dem ifrån sidorna
+        //Generate balls from random sides, 0 = Left, 1 = Right, 2 = Top, 3 = Bott
+        //Set the speed and start value of the balls
+        //Save speed in ball.tag (Point) and set positon on canvas
         public void CreateRandomBall()
         {
-            if (totalBalls >= ballsToCreate)
-            {
-                return;
-            }
-
             var ball = new Ellipse
             {
                 Width = 10,
@@ -56,66 +46,65 @@ namespace BallarAvStal
                 Fill = Brushes.Red
             };
 
-            //Genereras från sidorna, 0=vänster, 1=höger, 2=topp, 3=bott 
             int side = random.Next(0, 4);
 
-            //Hastighet på bollarna
             double xVelocity, yVelocity, startX, startY;
 
             switch (side)
             {
                 case 0:
-                    xVelocity = 3; //fast hastighet åt höger (positiv x axel)
-                    yVelocity = random.Next(-3, 4); //Slump hastighet upp/ner (positiv y axel nedåt negativ uppåt)
-                    startX = 0; //startpunkt vid vänster kant
-                    startY = random.Next(0, (int)gameCanvas.ActualHeight - (int)ball.Height); //Random startpunkt (Y)
+                    xVelocity = 3; 
+                    yVelocity = random.Next(-3, 4); 
+                    startX = 0; 
+                    startY = random.Next(0, (int)gameCanvas.ActualHeight - (int)ball.Height); 
                     break;
                 case 1:
-                    xVelocity = -3; //Fast Hastighet åt vänster (negativ x axel)
-                    yVelocity = random.Next(-3, 4); // Slump hastighet upp/ner (positiv y axel nedåt negativ uppåt)
-                    startX = gameCanvas.ActualWidth - ball.Width; //Placering höger kant
-                    startY = random.Next(0, (int)gameCanvas.ActualHeight - (int)ball.Height); //Random startpunkt (Y)
+                    xVelocity = -3; 
+                    yVelocity = random.Next(-3, 4); 
+                    startX = gameCanvas.ActualWidth - ball.Width; 
+                    startY = random.Next(0, (int)gameCanvas.ActualHeight - (int)ball.Height); 
                     break;
                 case 2:
-                    xVelocity = random.Next(-3, 4); // Slump Hastighet horisontell vänster/höger
-                    yVelocity = 3; // fast hastighet nedåt
-                    startX = random.Next(0, (int)gameCanvas.ActualWidth - (int)ball.Width); //Random placering x position 
-                    startY = 0; //Placering topp
+                    xVelocity = random.Next(-3, 4); 
+                    yVelocity = 3; 
+                    startX = random.Next(0, (int)gameCanvas.ActualWidth - (int)ball.Width); 
+                    startY = 0; 
                     break;
                 case 3:
-                    xVelocity = random.Next(-3, 4); //Slump Hastighet horisontell vänster/höger
-                    yVelocity = -3; //Fast Hastighet uppåt
-                    startX = random.Next(0, (int)gameCanvas.ActualWidth - (int)ball.Width); //Placering höger kant
-                    startY = gameCanvas.ActualHeight - ball.Height; //Placering botten
+                    xVelocity = random.Next(-3, 4); 
+                    yVelocity = -3; 
+                    startX = random.Next(0, (int)gameCanvas.ActualWidth - (int)ball.Width); 
+                    startY = gameCanvas.ActualHeight - ball.Height; 
                     break;
                 default:
                     throw new InvalidOperationException("Ogiltig sida");
             }
           
-            ball.Tag = new Point(xVelocity, yVelocity); //Point lagras i .tag med bollens hastighet X/Y
-            Canvas.SetLeft(ball, startX); //Horisontell position av ball i canvas
-            Canvas.SetTop(ball, startY); //Horisontell position av ball i canvas
+            ball.Tag = new Point(xVelocity, yVelocity);
+            Canvas.SetLeft(ball, startX); 
+            Canvas.SetTop(ball, startY); 
 
             movingBalls.Add(ball);
-            gameCanvas.Children.Add(ball); //Lägger till bollen i canvas så att den blir synlig
-            totalBalls++;
+            gameCanvas.Children.Add(ball); 
         }
 
-        //Rörelse/studs för bollarna
+        //Speed from .Tag (Point) into dx,dy
+        //Balls new position = current position + speed
+        //Ball hits left/right wall, invert horizontal speed (dx)
+        //Ball hits top/bott wall, invert vertical speed (dy)
+        //After bounce update .Tag with new speed and set new positon
         public void MoveRandomBall()
         {
             foreach (var ball in movingBalls)
             {
-                //Hastigheten kopieras från .tag till dx,dy
                 var velocity = (Point)ball.Tag; 
                 double dx = velocity.X; 
                 double dy = velocity.Y;
 
-                //Bollens nya position (nuvarande position + hastighet )
                 var newX = Canvas.GetLeft(ball) + dx; 
                 var newY = Canvas.GetTop(ball) + dy; 
 
-                //Träffar bollen en kant blir hastigheten inverterad och bollen gör en "studs"
+   
                 if (newX <= 0 || newX >= gameCanvas.ActualWidth - ball.Width)
                 {
                     dx = -dx;
@@ -125,14 +114,15 @@ namespace BallarAvStal
                     dy = -dy;
                 }
 
-                //nya hastigheten efter studs sparas till .tag
                 ball.Tag = new Point(dx, dy); 
                 Canvas.SetLeft(ball, newX);
                 Canvas.SetTop(ball, newY);
             }
         }
 
-        //Kollision med Spelare och bollarna
+        //playerRect represent area (Rect) of player shape by current position
+        //ballRect represent area (Rect) of ball shape by current position
+        //Collision true when player and ball intersects
         public bool CheckForCollision(Shape playerShape)
         {
             Rect playerRect = new Rect(Canvas.GetLeft(playerShape), Canvas.GetTop(playerShape), playerShape.Width, playerShape.Height);
@@ -145,7 +135,6 @@ namespace BallarAvStal
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -153,8 +142,6 @@ namespace BallarAvStal
         {
             movingBalls.Clear();
             gameCanvas.Children.Clear();
-            totalBalls = 0;
-            ballsToCreate = 1;
         }       
     }
 }

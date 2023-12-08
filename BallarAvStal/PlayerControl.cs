@@ -15,6 +15,7 @@ namespace BallarAvStal
 
         private Canvas gameCanvas;
 
+        //Control player speed here
         private const int Speed = 5;
 
         public PlayerControl(Canvas canvas, Shape shape)
@@ -23,6 +24,10 @@ namespace BallarAvStal
             playerShape = shape;
         }
 
+        //New position based on current positon, direction booleans and speed
+        //Adjust the positon by positon +/- speed
+        //Keep the player inside the canvas by not letting the player position get negative 
+        //Update player position (shape) with new X and Y  
         public void MovePlayer()
         {
             double newX = Canvas.GetLeft(playerShape) + (GoLeft ? -Speed : 0) + (GoRight ? Speed : 0);

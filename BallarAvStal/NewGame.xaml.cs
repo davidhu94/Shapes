@@ -15,6 +15,7 @@ namespace BallarAvStal
             InitializeComponent();          
         }
 
+        //Validate inputs,create player and open the Game
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (SelectShape.SelectedItem != null && !string.IsNullOrEmpty(NameTextBox.Text)) 
