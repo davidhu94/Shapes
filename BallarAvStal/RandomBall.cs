@@ -77,7 +77,7 @@ namespace BallarAvStal
                     startY = gameCanvas.ActualHeight - ball.Height; 
                     break;
                 default:
-                    throw new InvalidOperationException("Ogiltig sida");
+                    throw new InvalidOperationException("Invalid side");
             }
           
             ball.Tag = new Point(xVelocity, yVelocity);

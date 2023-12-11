@@ -28,6 +28,7 @@
             <StackPanel VerticalAlignment="center" HorizontalAlignment="Center">
                 <Button x:Name="newGameButton" Background="#ffeead"  Content="New Game" Height="30" Width="150" Click="NewGameButton_Click"/>
                 <Button Background="#ffeead" Content="Store" Height="30" Width="150" Margin="0 20 0 0"/>
+                <Button x:Name="quit" Background="#ffeead"  Content="Quit" Height="30" Width="150" Margin="0 20 0 0" Click="quit_Click"/>
 
             </StackPanel>
             <ListBox x:Name="HighScoreBoard" Background="#ffeead" Margin="35,45,585,164"/>

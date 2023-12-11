@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 
@@ -9,7 +10,9 @@ namespace BallarAvStal
         public string PlayerName { get; set; }
 
         public string SelectedShape { get; set; }
-        
+
+        public int HighScore { get; set; }
+
         //Generate shape based on player choice
         public Shape GetPlayerShape()
         {
@@ -19,6 +22,8 @@ namespace BallarAvStal
                     return new Ellipse { Width = 40, Height = 40, Fill = Brushes.Blue };
                 case "Rectangle":
                     return new Rectangle { Width = 40, Height = 40, Fill = Brushes.Blue };
+                //case "Polygon":
+                //    return new pol  { Width = 40, Height = 40, Fill = Brushes.Blue };
                 //case "Polygon":
                 //    Polygon polygon = new Polygon
                 //    {
@@ -36,6 +41,7 @@ namespace BallarAvStal
                 default:
                     throw new InvalidOperationException("Invalid shape selected");
             }
+
         }
     }
 }

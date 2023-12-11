@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace BallarAvStal
 {
@@ -18,6 +20,8 @@ namespace BallarAvStal
         private RandomBall randomBall;
 
         private Player player;
+
+        private User user;
 
         private int gameLoopTicks = 0;
 
@@ -123,8 +127,20 @@ namespace BallarAvStal
             timeLbl.Content = secondsPassed.ToString(); 
         }
 
+        private int UpdateHighScore()
+        {
+            int newHighScore = 0;
+
+            player.HighScore = newHighScore + secondsPassed;
+
+            return player.HighScore;
+        }
+
         public void GameOver()
         {
+            UpdateHighScore();
+            //user.WritePlayersToCsv();
+
             randomBall.ballCreationTimer.Stop();
 
             gameLoopTimer.Stop();
@@ -136,7 +152,7 @@ namespace BallarAvStal
             }
             else
             {
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Process.Start(Application.ResourceAssembly.Location);
                 Application.Current.Shutdown();
             }
         }

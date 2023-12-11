@@ -22,11 +22,27 @@
 
 
         <Grid>
-
+            <!--<Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                
+                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                
+                
+            </Grid.RowDefinitions>-->
             <StackPanel Margin="10">
                 <StackPanel Orientation="Horizontal" Margin="10,0,0,10">
                     <TextBlock Text="Name:" Margin="10 0 0 0" VerticalAlignment="Center" Background="#88d8b0"/>
                     <TextBox Name="NameTextBox" Margin="20 15 10 10" Width="150" Background="#ffeead"/>
+                    <!--<Button Grid.Column="1" Grid.Row="1" Content="Login"  Name="loginButton" Margin="10 10 10 10" Width="40" Height="20" Background="#ffeead"/>-->
+                    <!--<Button Content="New"  Name="newPlayerButton" Width="40" Height="20" Background="#ffeead"/>-->
                 </StackPanel>
 
                 <StackPanel Margin="30,10,0,10" HorizontalAlignment="Left">
@@ -38,9 +54,16 @@
                         <ComboBoxItem Content="Rectangle" Background="#ffeead"/>
                         <ComboBoxItem Content="Polygon" Background="#ffeead"/>
                     </ComboBox>
+                    <ListBox Name="nameListBox" Margin="10 10 10 10" Height="100" Width="100"  Background="#ffeead"/>
+                    <Button Content="Add" Name="addButton" Width="40" HorizontalAlignment="Left" Background="#ffeead" Click="addButton_Click" />
+                    <Button Content="Remove" Name="removeButton" Width="54" HorizontalAlignment="Left" Background="#ffeead" Click="removeButton_Click"/>
+                    <Button Content="Save" Name="saveButton" Width="54" HorizontalAlignment="Left" Background="#ffeead" Click="saveButton_Click"/>
+                    <Button x:Name="quit" Background="#ffeead"  Content="Quit" Height="30" Width="150" Margin="0 20 0 0" Click="quit_Click"/>
                 </StackPanel>
 
                 <Button Name="playButton" Content="Play" Background="#ffeead" Width="100" Height="30" Click="PlayButton_Click"/>
+
+
             </StackPanel>
         </Grid>
     </Border>
