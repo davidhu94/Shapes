@@ -17,11 +17,20 @@ namespace BallarAvStal
             InitializeComponent();
             fileManager = new FileManager();
             LoadPlayerNames();
+            ShowMessageBoxWithDelay();
+        }
+
+        public async void ShowMessageBoxWithDelay()
+        {
+            await Task.Delay(500);
+            MessageBox.Show("To start: Choose a name, form, add and then save.");
         }
 
         //Validate inputs,create player and open the Game
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Your goal is to not be hit by the balls. Use W-A-S-D to move. The longer you last, the more xp you get.");
+
             if (SelectShape.SelectedItem != null && nameListBox.SelectedItem != null) 
             {
                 ComboBoxItem selectedItem = (ComboBoxItem)SelectShape.SelectedItem;

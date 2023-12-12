@@ -1,7 +1,6 @@
 ﻿using System.Windows.Media;
 using System.Windows.Shapes;
 
-
 namespace BallarAvStal
 {
     public class Player
@@ -18,9 +17,9 @@ namespace BallarAvStal
             switch (SelectedShape)
             {
                 case "Ellipse":
-                    return new Ellipse { Width = 40, Height = 40, Fill = Brushes.Blue };
+                    return new Ellipse { Width = 40, Height = 40, Fill = Brushes.DarkSlateGray };
                 case "Rectangle":
-                    return new Rectangle { Width = 40, Height = 40, Fill = Brushes.Blue };
+                    return new Rectangle { Width = 40, Height = 40, Fill = Brushes.DarkSlateGray };
                 default:
                     throw new InvalidOperationException("Invalid shape selected");
             }
