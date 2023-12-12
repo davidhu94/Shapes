@@ -3,8 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace BallarAvStal
 {
@@ -21,7 +19,7 @@ namespace BallarAvStal
 
         private Player player;
 
-        private User user;
+        private FileManager fileManager;
 
         private int gameLoopTicks = 0;
 
@@ -33,6 +31,7 @@ namespace BallarAvStal
             GameCanvas.Focus();
 
             this.player = player;
+            fileManager = new FileManager();
 
             Shape playerShape = player.GetPlayerShape();
             GameCanvas.Children.Add(playerShape);
@@ -49,11 +48,10 @@ namespace BallarAvStal
             gameLoopTimer.Start();
 
             randomBall = new RandomBall(GameCanvas);
-
         }
 
         //Main loop of the game
-        //Clock ticks 50 ticks * 20 ms = 1000 ms (1 second)
+        //Time clock ticks 50 ticks * 20 ms = 1000 ms (1 second)
         private void GameLoopTimer_Tick(object sender, EventArgs e)
         {
             playerControl.MovePlayer();
@@ -70,6 +68,7 @@ namespace BallarAvStal
             if (randomBall.CheckForCollision(playerControl.PlayerShape))
             {
                 GameOver();
+                UpdateHighScore();
             } 
         }
 
@@ -127,48 +126,37 @@ namespace BallarAvStal
             timeLbl.Content = secondsPassed.ToString(); 
         }
 
-        private int UpdateHighScore()
+        //High score is based on the time clock
+        private void UpdateHighScore()
         {
-            int newHighScore = 0;
-
-            player.HighScore = newHighScore + secondsPassed;
-
-            return player.HighScore;
+            if (secondsPassed > player.HighScore)
+            {
+                player.HighScore = secondsPassed;
+            }
         }
 
+        //Save high score to CSV and stop all game timers
+        //Restart or close the game depending on players choice
         public void GameOver()
         {
             UpdateHighScore();
-            //user.WritePlayersToCsv();
+            fileManager.SaveToCsv(player.PlayerName, player.SelectedShape, player.HighScore);
 
             randomBall.ballCreationTimer.Stop();
-
             gameLoopTimer.Stop();
 
             MessageBoxResult result = MessageBox.Show("Game Over! Play again?", "Game Over", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                RestartGame();
+                GameWindow newGameWindow = new GameWindow(player);
+                newGameWindow.Show();
+
+                this.Close();
             }
             else
             {
-                Process.Start(Application.ResourceAssembly.Location);
                 Application.Current.Shutdown();
             }
-        }
-
-        public void RestartGame()
-        {
-            playerControl.PlayerShape.Visibility = Visibility.Visible;
-            Canvas.SetLeft(playerControl.PlayerShape, 56);
-            Canvas.SetTop(playerControl.PlayerShape, 200);
-
-            secondsPassed = 0;
-            UpdateTime();
-
-            gameLoopTimer.Start();
-            randomBall.ResetBalls();
-            randomBall.ballCreationTimer.Start();
         }
     }
 }

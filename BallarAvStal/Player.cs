@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows.Shapes;
 
 
@@ -22,26 +21,9 @@ namespace BallarAvStal
                     return new Ellipse { Width = 40, Height = 40, Fill = Brushes.Blue };
                 case "Rectangle":
                     return new Rectangle { Width = 40, Height = 40, Fill = Brushes.Blue };
-                //case "Polygon":
-                //    return new pol  { Width = 40, Height = 40, Fill = Brushes.Blue };
-                //case "Polygon":
-                //    Polygon polygon = new Polygon
-                //    {
-                //        Fill = Brushes.Blue,
-                //        Stroke = Brushes.Black,
-                //        StrokeThickness = 1
-                //    };
-                //    polygon.Points = new PointCollection(new List<System.Windows.Point>
-                //    {
-                //        new System.Windows.Point(0, 20), // Vänster 
-                //        new System.Windows.Point(20, 0), // Topp
-                //        new System.Windows.Point(40, 20), // Höger
-                //    });
-                //    return polygon;
                 default:
                     throw new InvalidOperationException("Invalid shape selected");
             }
-
         }
     }
 }

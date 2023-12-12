@@ -52,7 +52,6 @@
 
                         <ComboBoxItem Content="Ellipse" Background="#ffeead"/>
                         <ComboBoxItem Content="Rectangle" Background="#ffeead"/>
-                        <ComboBoxItem Content="Polygon" Background="#ffeead"/>
                     </ComboBox>
                     <ListBox Name="nameListBox" Margin="10 10 10 10" Height="100" Width="100"  Background="#ffeead"/>
                     <Button Content="Add" Name="addButton" Width="40" HorizontalAlignment="Left" Background="#ffeead" Click="addButton_Click" />

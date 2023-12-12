@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BallarAvStal
 {
-    public class User
+    public class FileManager
     {
         Player player;
 
-        public User(Player player)
+        public FileManager(Player player)
         {
             this.player = player;
         }
-        public User()
+        public FileManager()
         {
 
         }
@@ -38,6 +38,7 @@ namespace BallarAvStal
             {
                 existingPlayer.SelectedShape = selectedShape;
                 existingPlayer.PlayerName = playerName;
+                existingPlayer.HighScore = highScore;
             }
             else
             {

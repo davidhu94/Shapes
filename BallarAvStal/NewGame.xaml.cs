@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -11,12 +10,12 @@ namespace BallarAvStal
     /// </summary>
     public partial class NewGame : Window
     {
-        private User user;
-
+        private FileManager fileManager;
+      
         public NewGame()
         {
             InitializeComponent();
-            user = new User();
+            fileManager = new FileManager();
             LoadPlayerNames();
         }
 
@@ -26,11 +25,10 @@ namespace BallarAvStal
             if (SelectShape.SelectedItem != null && nameListBox.SelectedItem != null) 
             {
                 ComboBoxItem selectedItem = (ComboBoxItem)SelectShape.SelectedItem;
-                //string selectedShape = selectedItem.Content.ToString();
 
                 string playerName = nameListBox.SelectedItem.ToString();
 
-                Player existingPlayer = user.GetPlayerByName(playerName);
+                Player existingPlayer = fileManager.GetPlayerByName(playerName);
 
                 if (existingPlayer != null)
                 {
@@ -42,16 +40,6 @@ namespace BallarAvStal
                 {
                     MessageBox.Show("Player with the selected name doesn't exist! You need to save first!");
                 }
-
-
-                //Player player = new Player
-                //{
-                //    SelectedShape = selectedShape
-                //};
-
-                //GameWindow mainWindow = new GameWindow(player);
-                //mainWindow.Show();
-                //this.Hide();
             }
             else
             {
@@ -92,7 +80,7 @@ namespace BallarAvStal
 
                 nameListBox.Items.Remove(playerNameToRemove);
 
-                user.RemovePlayerFromCsv(playerNameToRemove);
+                fileManager.RemovePlayerFromCsv(playerNameToRemove);
             }
             else
             {
@@ -118,7 +106,7 @@ namespace BallarAvStal
             {
                 string selectedShape = GetSelectedShape();
                 int highScore = 0;
-                user.SaveToCsv(playerName, selectedShape, highScore);
+                fileManager.SaveToCsv(playerName, selectedShape, highScore);
             }
             MessageBox.Show("Players saved!");
         }
@@ -126,7 +114,7 @@ namespace BallarAvStal
         private void LoadPlayerNames()
         {
             nameListBox.Items.Clear();
-            List<Player> loadedPlayers = user.LoadFromCsv();
+            List<Player> loadedPlayers = fileManager.LoadFromCsv();
             foreach (Player player in loadedPlayers)
             {
                 nameListBox.Items.Add(player.PlayerName);
@@ -135,7 +123,6 @@ namespace BallarAvStal
 
         private void quit_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using System.Diagnostics;
 
 namespace BallarAvStal
 {
@@ -9,10 +8,12 @@ namespace BallarAvStal
     /// </summary>
     public partial class MainMenu : Window
     {
-        GameWindow mainWindow;
+        FileManager fileManager;
         public MainMenu()
         {
             InitializeComponent();
+            fileManager = new FileManager();
+            LoadPlayerNames();
         }
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
@@ -30,9 +31,17 @@ namespace BallarAvStal
             }
         }
 
+        private void LoadPlayerNames()
+        {
+            List<Player> loadedPlayers = fileManager.LoadFromCsv();
+            foreach (Player player in loadedPlayers)
+            {
+                HighScoreBoard.Items.Add($"{player.PlayerName} || Score: {player.HighScore}");
+            }
+        }
+
         private void quit_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
         }
     }

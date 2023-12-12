@@ -53,26 +53,26 @@ namespace BallarAvStal
             switch (side)
             {
                 case 0:
-                    xVelocity = 3; 
+                    xVelocity = 5; 
                     yVelocity = random.Next(-3, 4); 
                     startX = 0; 
                     startY = random.Next(0, (int)gameCanvas.ActualHeight - (int)ball.Height); 
                     break;
                 case 1:
-                    xVelocity = -3; 
+                    xVelocity = -5; 
                     yVelocity = random.Next(-3, 4); 
                     startX = gameCanvas.ActualWidth - ball.Width; 
                     startY = random.Next(0, (int)gameCanvas.ActualHeight - (int)ball.Height); 
                     break;
                 case 2:
                     xVelocity = random.Next(-3, 4); 
-                    yVelocity = 3; 
+                    yVelocity = 5; 
                     startX = random.Next(0, (int)gameCanvas.ActualWidth - (int)ball.Width); 
                     startY = 0; 
                     break;
                 case 3:
                     xVelocity = random.Next(-3, 4); 
-                    yVelocity = -3; 
+                    yVelocity = -5; 
                     startX = random.Next(0, (int)gameCanvas.ActualWidth - (int)ball.Width); 
                     startY = gameCanvas.ActualHeight - ball.Height; 
                     break;
