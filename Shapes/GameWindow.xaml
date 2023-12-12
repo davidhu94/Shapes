@@ -25,7 +25,8 @@
         BorderBrush="#ffeead"
         BorderThickness="5">
         <Canvas Name="GameCanvas">
-            <Label x:Name="timeLbl" Content="0" FontSize="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Canvas.Left="388"/>
+            <Label Foreground="#ffeead" x:Name="timeLbl" Content="0" FontSize="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" Canvas.Left="415" HorizontalAlignment="Center" Canvas.Top="10"/>
+            <Label Foreground="#ffeead" x:Name="ScoreLbl" Content="Score:" FontSize="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" Canvas.Left="338" HorizontalAlignment="Left" Canvas.Top="10"/>
         </Canvas>
     </Border>
 </Window>

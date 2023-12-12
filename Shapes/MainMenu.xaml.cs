@@ -41,7 +41,7 @@ namespace Shapes
             }
         }
 
-        private void Quit_Click(object sender, RoutedEventArgs e)
+        private void quit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

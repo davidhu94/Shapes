@@ -25,14 +25,13 @@
         Mörkare Beige #ffcc5c
         Ljusare grön #88d8b0-->
         <Grid>
-            <StackPanel VerticalAlignment="center" HorizontalAlignment="Center">
+            <TextBlock TextAlignment="Center" Width="300" Height="80" FontStyle="Italic" FontSize="60" HorizontalAlignment="Center" Text="SHAPES" Foreground="#FFFFEEAD" Margin="0,36,0,324"/>
+            <StackPanel Margin="190,175,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
                 <Button x:Name="newGameButton" Background="#ffeead"  Content="New Game" Height="30" Width="150" Click="NewGameButton_Click"/>
                 <Button Background="#ffeead" Content="Store" Height="30" Width="150" Margin="0 20 0 0"/>
-                <Button x:Name="Quit" Background="#ffeead"  Content="Quit" Height="30" Width="150" Margin="0 20 0 0" Click="Quit_Click"/>
-
+                <Button x:Name="quit" Background="#ffeead"  Content="Quit" Height="30" Width="150" Margin="0 20 0 0" Click="quit_Click"/>
             </StackPanel>
-            <ListBox x:Name="HighScoreBoard" Background="#ffeead" Margin="35,45,585,164"/>
-
+            <ListBox Width="160" Height="200" x:Name="HighScoreBoard" Background="#ffeead" Margin="440,140,190,100"/>
         </Grid>
     </Border>
 </Window>

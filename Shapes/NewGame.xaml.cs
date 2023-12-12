@@ -64,39 +64,6 @@ namespace Shapes
             }
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            string newName = NameTextBox.Text.Trim();
-            string selectedShape = GetSelectedShape();
-
-            if (string.IsNullOrEmpty(selectedShape))
-            {
-                MessageBox.Show("You need to select a shape!");
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(newName) && !nameListBox.Items.Contains(newName))
-            {
-                nameListBox.Items.Add(newName);
-            }
-        }
-
-        private void RemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (nameListBox.SelectedItem != null)
-            {
-                string playerNameToRemove = nameListBox.SelectedItem.ToString();
-
-                nameListBox.Items.Remove(playerNameToRemove);
-
-                fileManager.RemovePlayerFromCsv(playerNameToRemove);
-            }
-            else
-            {
-                MessageBox.Show("Select a name to remove.");
-            }
-        }
-
         private string GetSelectedShape()
         {
             if (SelectShape.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content != null)
@@ -104,19 +71,6 @@ namespace Shapes
                 return selectedItem.Content.ToString();
             }
             return "";
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            List<string> playerNames = nameListBox.Items.OfType<string>().ToList();
-
-            foreach (string playerName in playerNames)
-            {
-                string selectedShape = GetSelectedShape();
-                int highScore = 0;
-                fileManager.SaveToCsv(playerName, selectedShape, highScore);
-            }
-            MessageBox.Show("Players saved!");
         }
 
         private void LoadPlayerNames()
@@ -134,6 +88,52 @@ namespace Shapes
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
             this.Hide();
+        }
+
+        private void removeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (nameListBox.SelectedItem != null)
+            {
+                string playerNameToRemove = nameListBox.SelectedItem.ToString();
+
+                nameListBox.Items.Remove(playerNameToRemove);
+
+                fileManager.RemovePlayerFromCsv(playerNameToRemove);
+            }
+            else
+            {
+                MessageBox.Show("Select a name to remove.");
+            }
+        }
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> playerNames = nameListBox.Items.OfType<string>().ToList();
+
+            foreach (string playerName in playerNames)
+            {
+                string selectedShape = GetSelectedShape();
+                int highScore = 0;
+                fileManager.SaveToCsv(playerName, selectedShape, highScore);
+            }
+            MessageBox.Show("Players saved!");
+        }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            string newName = NameTextBox.Text.Trim();
+            string selectedShape = GetSelectedShape();
+
+            if (string.IsNullOrEmpty(selectedShape))
+            {
+                MessageBox.Show("You need to select a shape!");
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(newName) && !nameListBox.Items.Contains(newName))
+            {
+                nameListBox.Items.Add(newName);
+            }
         }
     }
 }
