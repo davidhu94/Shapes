@@ -23,7 +23,7 @@ namespace Shapes
         private async void ShowMessageBoxWithDelay()
         {
             await Task.Delay(500);
-            MessageBox.Show("To start: Choose a name, form, add and then save.");
+            MessageBox.Show("Choose a Name, Shape and press Add.");
         }
 
         //Validate inputs,create player and open the Game
@@ -47,12 +47,12 @@ namespace Shapes
                 }
                 else
                 {
-                    MessageBox.Show("Player with the selected name doesn't exist! You need to save first!");
+                    MessageBox.Show("Player with the selected name doesn't exist!");
                 }
             }
             else
             {
-                MessageBox.Show("Enter your name and select a shape to begin.");
+                MessageBox.Show("Press the help to see the instructions.");
             }
         }
 
@@ -90,7 +90,7 @@ namespace Shapes
             this.Hide();
         }
 
-        private void removeButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             if (nameListBox.SelectedItem != null)
             {
@@ -106,7 +106,7 @@ namespace Shapes
             }
         }
 
-        private void saveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveToCsv()
         {
             List<string> playerNames = nameListBox.Items.OfType<string>().ToList();
 
@@ -114,13 +114,18 @@ namespace Shapes
             {
                 string selectedShape = GetSelectedShape();
                 int highScore = 0;
+
                 fileManager.SaveToCsv(playerName, selectedShape, highScore);
             }
-            MessageBox.Show("Players saved!");
+            MessageBox.Show("Players saved! You may play the game!");
         }
 
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            // Chooses the last created player in listbox
+            int lastIndex = nameListBox.Items.Count;
+            nameListBox.SelectedIndex = lastIndex;
+
             string newName = NameTextBox.Text.Trim();
             string selectedShape = GetSelectedShape();
 
@@ -134,6 +139,20 @@ namespace Shapes
             {
                 nameListBox.Items.Add(newName);
             }
+
+            if (string.IsNullOrEmpty(NameTextBox.Text))
+            {
+                MessageBox.Show("You need to write a name!");
+            }
+            else
+            {
+                SaveToCsv();
+            }
+        }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("To play\nChoose a Name, Shape and press Add.\nIf you've already created a player, choose it in the list, select a shape and press play.");
         }
     }
 }

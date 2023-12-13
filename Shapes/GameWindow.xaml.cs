@@ -155,7 +155,9 @@ namespace Shapes
             }
             else
             {
-                Application.Current.Shutdown();
+                MainMenu mainMenu = new MainMenu();
+                mainMenu.Show();
+                this.Close();
             }
         }
     }

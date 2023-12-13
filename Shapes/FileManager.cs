@@ -10,7 +10,7 @@ namespace Shapes
             return players.FirstOrDefault(p => p.PlayerName.Equals(playerName, StringComparison.OrdinalIgnoreCase));
         }
 
-        public void SaveToCsv(string playerName, string selectedShape, int highScore)
+        public void SaveToCsv(string playerName, string selectedShape, int highScore) 
         {
             string filePath = "players.csv";
 
@@ -31,7 +31,7 @@ namespace Shapes
                 {
                     PlayerName = playerName,
                     SelectedShape = selectedShape,
-                    HighScore = highScore
+                    HighScore = highScore    
                 });
             }
 
@@ -42,7 +42,7 @@ namespace Shapes
         {
             using (StreamWriter sw = new StreamWriter(filePath, false))
             {
-                sw.WriteLine("PlayerName,SelectedShape,HighScore");
+                sw.WriteLine("PlayerName, SelectedShape, HighScore");  
                 foreach (Player player in players)
                 {
                     sw.WriteLine($"{player.PlayerName},{player.SelectedShape},{player.HighScore}");
