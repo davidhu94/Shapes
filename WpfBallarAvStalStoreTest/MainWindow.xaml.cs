@@ -88,7 +88,6 @@ namespace WpfBallarAvStalStoreTest
                     {
                         player.Speed *= 2;
                     }
-                    player.ShowPlayerInfo();
                 }
                 if (ShapeListbox.SelectedItem != null)
                 {
@@ -96,18 +95,38 @@ namespace WpfBallarAvStalStoreTest
 
                     if (shapeindex == 0)
                     {
-
+                        player.Shape = 0;
                     }
-
-                    player.ShowPlayerInfo();
+                    if (shapeindex == 1)
+                    {
+                        player.Shape = 1;
+                    }
                 }
                 if (ColourListbox.SelectedItem != null)
                 {
-                    //player.Color = 
-                    MessageBox.Show(player.Color.ToString());
+                    int colourindex = ColourListbox.SelectedIndex;
+                    if (colourindex == 0)
+                    {
+                        player.Color = 0;
+                    }
+                    if (colourindex == 1)
+                    {
+                        player.Color = 1;
+                    }
+                    if (colourindex == 2)
+                    {
+                        player.Color = 2;
+                    }
+                    if (colourindex == 3)
+                    {
+                        player.Color = 3;
+                    }
                 }
-                
-                
+                player.ShowPlayerInfo();
+                PlayersListbox.SelectedItem = null;
+                SpeedBostListbox.SelectedItem = null;
+                ShapeListbox.SelectedItem = null;
+                ColourListbox.SelectedItem = null;
             }
         }
     }
