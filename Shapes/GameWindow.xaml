@@ -1,0 +1,52 @@
+﻿<Window x:Class="Shapes.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shapes"
+        mc:Ignorable="d"
+        Title="GameWindow" Height="450" Width="800" 
+        
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        MouseDown="Window_MouseDown">
+    
+    <Border CornerRadius="50"
+            Background="#96ceb4"
+            BorderBrush="#ffeead"
+            BorderThickness="5">
+        <Canvas Name="GameCanvas">
+
+            <!--TIMELABEL-->
+            <Label 
+                Foreground="#ffeead" 
+                x:Name="timeLabel" 
+                Content="0"
+                FontSize="25"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalAlignment="Center" 
+                Canvas.Left="415" 
+                HorizontalAlignment="Center" 
+                Canvas.Top="10">
+            </Label>
+
+            <!--SCORELABEL-->
+            <Label Foreground="#ffeead" 
+                   x:Name="ScoreLabel"
+                   Content="Score:"
+                   FontSize="25"
+                   VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Center"
+                   VerticalAlignment="Center"
+                   Canvas.Left="338"
+                   HorizontalAlignment="Left"
+                   Canvas.Top="10">
+            </Label>
+
+        </Canvas>
+    </Border>
+</Window>

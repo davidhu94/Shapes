@@ -1,0 +1,182 @@
+﻿<Window x:Class="Shapes.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shapes"
+        mc:Ignorable="d"
+        Title="MainMenu" Height="450" Width="800"
+        
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        MouseDown="Window_MouseDown">
+
+    <!--FÄRGER-->
+    <Border CornerRadius="50"
+            Background="#96ceb4" 
+            BorderBrush="#ffeead" 
+            BorderThickness="5">
+
+        <Grid>
+
+            <!--RUBRIK-->
+            <TextBlock x:Name="shapesTextBlock"
+                       Text="SHAPES"  
+                       FontStyle="Italic" 
+                       FontWeight="Bold" 
+                       FontSize="60" 
+                       VerticalAlignment="Top" 
+                       HorizontalAlignment="Center"
+                       Foreground="#FFFFEEAD" 
+                       Margin="0 20 0 0"/>
+
+            <StackPanel VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" 
+                        Margin="0 50 0 0">
+
+                <!--NEW PLAYER BUTTON-->
+                <Button x:Name="NewPlayerButton" 
+                        Click="NewPlayerButton_Click"
+                        FontWeight="DemiBold">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="newPlayerBorder"   
+                                Height="30" 
+                                Width="150" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                Margin="0"
+                                CornerRadius="15"
+                                Background="#ffeead"
+                                BorderBrush="#ff6f69"
+                                BorderThickness="2">
+                                <ContentPresenter Content="NEW PLAYER" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" 
+                                         Value="True">
+                                    <Setter TargetName="newPlayerBorder" 
+                                            Property="Background" 
+                                            Value="#ffcc5c"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="#ff6f69"/>
+                    </Button.Foreground>
+                </Button>
+
+                <!--SAVEPLAYERBUTTON-->
+                <Button x:Name="SavedPlayersButton" 
+                        Click="SavedPlayersButton_Click"
+                        FontWeight="DemiBold">>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="savedPlayersBorder"   
+                                Height="30" 
+                                Width="150" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                Margin="0 20 0 0"
+                                CornerRadius="15"
+                                Background="#ffeead"
+                                BorderBrush="#ff6f69"
+                                BorderThickness="2">
+                                <ContentPresenter Content="SAVED PLAYERS" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" 
+                                     Value="True">
+                                    <Setter TargetName="savedPlayersBorder" 
+                                        Property="Background" 
+                                        Value="#ffcc5c"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="#ff6f69"/>
+                    </Button.Foreground>
+                </Button>
+
+                <!--HIGHSCOREBUTTON-->
+                <Button x:Name="HighscoreButton" 
+                        Click="HighscoreButton_Click"
+                        FontWeight="DemiBold">>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="highscoreBorder"   
+                                    Height="30" 
+                                    Width="150" 
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center" 
+                                    Margin="0 20 0 0"
+                                    CornerRadius="15"
+                                    Background="#ffeead"
+                                    BorderBrush="#ff6f69"
+                                    BorderThickness="2">
+                                <ContentPresenter Content="HIGHSCORES" 
+                                                  HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" 
+                                         Value="True">
+                                    <Setter TargetName="highscoreBorder" 
+                                            Property="Background" 
+                                            Value="#ffcc5c"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="#ff6f69"/>
+                    </Button.Foreground>
+                </Button>
+                
+                <!--QUITBUTTON-->
+                <Button x:Name="QuitButton" 
+                        Click="QuitButton_Click"
+                        FontWeight="DemiBold">>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="quitBorder"   
+                                Height="30" 
+                                Width="150" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                Margin="0 20 0 0"
+                                CornerRadius="15"
+                                Background="#ffeead"
+                                BorderBrush="#ff6f69"
+                                BorderThickness="2">
+                                <ContentPresenter Content="QUIT" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" 
+                                     Value="True">
+                                    <Setter TargetName="quitBorder" 
+                                        Property="Background" 
+                                        Value="#ffcc5c"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="#ff6f69"/>
+                    </Button.Foreground>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
